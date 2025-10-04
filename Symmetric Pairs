@@ -1,0 +1,7 @@
+SELECT f.x, f.y
+FROM functions f
+JOIN functions ff
+ON f.x = ff.y AND f.y = ff.x
+GROUP BY f.x, f.y
+HAVING (f.x < f.y) or COUNT(f.x) > 1
+ORDER BY f.x;
