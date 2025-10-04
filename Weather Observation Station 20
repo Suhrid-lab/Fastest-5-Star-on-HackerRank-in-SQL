@@ -1,0 +1,12 @@
+SET @row_number = 0;
+
+SELECT ROUND(RN.LAT_N, 4)
+FROM (SELECT LAT_N, (@row_number:=@row_number + 1) AS row_num
+FROM STATION
+ORDER BY LAT_N) AS RN
+WHERE RN.row_num = (
+SELECT
+CASE WHEN MOD(COUNT(LAT_N), 2) = 0 THEN COUNT(LAT_N)/2
+ELSE ROUND((COUNT(LAT_N) / 2 + (COUNT(LAT_N) + 1)/2)/2,0)
+END AS EorO
+FROM STATION)
